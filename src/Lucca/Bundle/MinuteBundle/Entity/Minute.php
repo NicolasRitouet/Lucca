@@ -103,13 +103,13 @@ class Minute implements LoggableInterface
     )]
     private Collection $humans;
 
-    #[ORM\OneToMany(targetEntity: Control::class, mappedBy: 'minute', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Control::class, mappedBy: 'minute', cascade: ['remove'], orphanRemoval: true)]
     private Collection $controls;
 
-    #[ORM\OneToMany(targetEntity: Updating::class, mappedBy: 'minute', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Updating::class, mappedBy: 'minute', cascade: ['remove'], orphanRemoval: true)]
     private Collection $updatings;
 
-    #[ORM\OneToMany(targetEntity: Decision::class, mappedBy: 'minute', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Decision::class, mappedBy: 'minute', cascade: ['remove'], orphanRemoval: true)]
     private Collection $decisions;
 
     #[ORM\Column]
@@ -159,7 +159,7 @@ class Minute implements LoggableInterface
     )]
     private ?string $origin = null;
 
-    #[ORM\OneToMany(targetEntity: MinuteStory::class, mappedBy: 'minute', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: MinuteStory::class, mappedBy: 'minute', cascade: ['remove'], orphanRemoval: true)]
     private Collection $historic;
 
     /************************************************************************ Custom functions ************************************************************************/

@@ -146,8 +146,7 @@ class Control implements LoggableInterface
     #[ORM\OneToMany(targetEntity: ControlEdition::class, mappedBy: 'control', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $editions;
 
-    #[ORM\OneToOne(targetEntity: Folder::class)]
-    #[ORM\JoinColumn]
+    #[ORM\OneToOne(targetEntity: Folder::class, mappedBy: 'control', cascade: ['remove'])]
     private ?Folder $folder = null;
 
     /************************************************************************ Custom functions ************************************************************************/
