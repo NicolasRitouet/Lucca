@@ -59,6 +59,14 @@ class Plot implements LoggableInterface
     private ?string $parcel = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Length(min: 2, minMessage: 'constraint.length.min', maxMessage: 'constraint.length.max')]
+    #[Assert\Regex(
+        pattern: '/^(([0-9]+)?[A-Z]+[0-9]+)(, ?([0-9]+)?[A-Z]+[0-9]+)*$/',
+        message: 'Ce champ doit contenir des séquences de lettres et/ou chiffres, séparées par des virgules, par exemple "A123, B456, 123ABC456".'
+    )]
+    private ?string $parcelClean = null;
+
+    #[ORM\Column(nullable: true)]
     #[Assert\Type(type: 'string', message: 'constraint.type')]
     #[Assert\Length(min: 2, max: 255, minMessage: 'constraint.length.min', maxMessage: 'constraint.length.max')]
     private ?string $address = null;
@@ -160,6 +168,18 @@ class Plot implements LoggableInterface
     public function getParcel(): ?string
     {
         return $this->parcel;
+    }
+
+    public function setParcelClean(?string $parcelClean): self
+    {
+        $this->parcelClean = $parcelClean;
+
+        return $this;
+    }
+
+    public function getParcelClean(): ?string
+    {
+        return $this->parcelClean;
     }
 
     public function setAddress(?string $address): self
