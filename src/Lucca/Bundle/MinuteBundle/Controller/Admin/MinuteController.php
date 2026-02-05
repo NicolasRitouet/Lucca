@@ -10,15 +10,15 @@
 namespace Lucca\Bundle\MinuteBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\{RedirectResponse, Response, Request};
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Lucca\Bundle\MinuteBundle\Manager\{MinuteManager, MinuteStoryManager, PlotManager};
+use Lucca\Bundle\MinuteBundle\Manager\{ControlManager, MinuteManager, MinuteStoryManager, PlotManager};
 use Lucca\Bundle\AdherentBundle\Finder\AdherentFinder;
 use Lucca\Bundle\DecisionBundle\Entity\Decision;
 use Lucca\Bundle\MinuteBundle\Entity\{Minute, MinuteStory, Plot};
@@ -29,7 +29,6 @@ use Lucca\Bundle\ParameterBundle\Utils\GeneralUtils;
 use Lucca\Bundle\SettingBundle\Manager\SettingManager;
 use Lucca\Bundle\CoreBundle\Exception\AigleNotificationException;
 use Lucca\Bundle\CoreBundle\Service\Aigle\MinuteChangeStatusAigleNotifier;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/minute')]
 #[IsGranted('ROLE_USER')]
@@ -59,7 +58,8 @@ class MinuteController extends AbstractController
         private readonly MinuteManager                   $minuteManager,
         private readonly NumMinuteGenerator              $numMinuteGenerator,
         private readonly MinuteChangeStatusAigleNotifier $minuteChangeStatusAigleNotifier,
-        private readonly TranslatorInterface             $translator
+        private readonly TranslatorInterface             $translator,
+        private readonly ControlManager                  $controlManager
     )
     {
         $this->filterByRollingYear = SettingManager::get('setting.folder.indexFilterByRollingOrCalendarYear.name');
@@ -310,14 +310,15 @@ class MinuteController extends AbstractController
             } catch (AigleNotificationException $e) {
                 $this->addFlash('danger', $e->getTranslatedMessage($this->translator));
             }
-
         }
+
         /** Get Minute Story to get status of the minute */
         $minuteStory = $em->getRepository(MinuteStory::class)->findLastByMinute($minute)[0];
 
         return $this->render('@LuccaMinute/Minute/show.html.twig', array(
             'minute' => $minute,
             'minuteStory' => $minuteStory,
+            'controlsWithoutRefreshTypeLost' => $this->controlManager->countValidControls($minute),
             'decisions' => $decisions,
             'closure' => $minute->getClosure(),
             'delete_form' => $deleteForm->createView(),

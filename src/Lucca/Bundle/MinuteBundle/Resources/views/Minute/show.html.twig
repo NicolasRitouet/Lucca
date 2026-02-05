@@ -146,7 +146,7 @@
                                        href="{{ path('lucca_minute_edit', { 'id': minute.id }) }}">
                                         <i class="fas fa-pencil-alt"></i></a>
 
-                                    {% if minute.controls|length == 0 %}
+                                    {% if controlsWithoutRefreshTypeLost == 0 %}
                                         <a class="btn btn-danger btn-lg float-right" data-toggle="modal"
                                            data-target="#minute-{{ minute.id }}"
                                            title="{{ 'link.minute.delete'|trans }}">

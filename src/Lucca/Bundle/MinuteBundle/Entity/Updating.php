@@ -46,6 +46,11 @@ class Updating implements LoggableInterface
     #[ORM\JoinColumn(nullable: false)]
     private Minute $minute;
 
+    /**
+     * cascade: ['remove'] is used here because of a business rule:
+     * each Control in this collection is strictly owned by this Updating.
+     * Deleting the Updating must lead to the deletion of its associated Controls.
+     */
     #[ORM\ManyToMany(targetEntity: Control::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinTable(name: 'lucca_minute_updating_linked_control',
         joinColumns: [new ORM\JoinColumn(name: 'updating_id', referencedColumnName: 'id')],
