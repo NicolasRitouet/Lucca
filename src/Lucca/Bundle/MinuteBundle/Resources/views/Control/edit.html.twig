@@ -274,164 +274,164 @@
     <script src="{{ asset('assets/js/jquery.collection.js') }}"></script>
     <script src="{{ asset('plugins/momentjs/moment.js') }}"></script>
 
-{#    <script>#}
-{#        #}{# Collection form #}
-{#        $('.human-collection').collection({#}
-{#            allow_duplicate: false, allow_up: false, allow_down: false,#}
-{#            add_at_the_end: true, max: 1,#}
-{#            add: '<a href="#" class="btn btn-info" title="{{ 'link.human.new'|trans }}"><span class="fa fa-plus"></span> {{ 'link.human.new'|trans }}</a>',#}
-{#        });#}
-{#        #}{# End - Collection form #}
+    <script>
+        {# Collection form #}
+        $('.human-collection').collection({
+            allow_duplicate: false, allow_up: false, allow_down: false,
+            add_at_the_end: true, max: 1,
+            add: '<a href="#" class="btn btn-info" title="{{ 'link.human.new'|trans }}"><span class="fa fa-plus"></span> {{ 'link.human.new'|trans }}</a>',
+        });
+        {# End - Collection form #}
 
-{#        #}{# Collection form #}
-{#        $('.agentsAttendants-collection').collection({#}
-{#            allow_duplicate: false, allow_up: false, allow_down: false,#}
-{#            add_at_the_end: true, max: 3,#}
-{#            add: '<a href="#" class="btn btn-secondary" title="{{ 'link.agentAttendant.new'|trans }}"><span class="fa fa-plus"></span></a>',#}
-{#        });#}
-{#        #}{# End - Collection form #}
+        {# Collection form #}
+        $('.agentsAttendants-collection').collection({
+            allow_duplicate: false, allow_up: false, allow_down: false,
+            add_at_the_end: true, max: 3,
+            add: '<a href="#" class="btn btn-secondary" title="{{ 'link.agentAttendant.new'|trans }}"><span class="fa fa-plus"></span></a>',
+        });
+        {# End - Collection form #}
 
-{#        #}{# Custom JS #}
-{#        #}{#--------------------------------------------------------------------#}
+        {# Custom JS #}
+        {#--------------------------------------------------------------------#}
 
-{#        #}{#-- Accepted --#}
-{#        #}{#--------------------------------------------------------------------#}
-{#        $(document).ready(function () {#}
-{#            $(".control-accepted").hide('slow');#}
+        {#-- Accepted --#}
+        {#--------------------------------------------------------------------#}
+        $(document).ready(function () {
+            $(".control-accepted").hide('slow');
 
-{#            if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.none')#}
-{#                $(".control-accepted-null").show('slow');#}
+            if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.none')
+                $(".control-accepted-null").show('slow');
 
-{#            else if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.nok')#}
-{#                $(".control-accepted-false").show('slow');#}
+            else if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.nok')
+                $(".control-accepted-false").show('slow');
 
-{#            else if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.ok')#}
-{#                $(".control-accepted-true").show('slow');#}
-{#        });#}
+            else if ($('#lucca_minutebundle_minute_control_accepted').val() === 'choice.accepted.ok')
+                $(".control-accepted-true").show('slow');
+        });
 
-{#        $('#lucca_minutebundle_minute_control_accepted').on('change', function () {#}
-{#            $(".control-accepted").hide('slow');#}
+        $('#lucca_minutebundle_minute_control_accepted').on('change', function () {
+            $(".control-accepted").hide('slow');
 
-{#            #}{# Accepted true #}
-{#            if ($(this).val() === 'choice.accepted.none') {#}
-{#                $(".control-accepted-null").show('slow');#}
-{#            } else if ($(this).val() === 'choice.accepted.nok') {#}
-{#                $(".control-accepted-false").show('slow');#}
-{#            } else if ($(this).val() === 'choice.accepted.ok') {#}
-{#                $(".control-accepted-true").show('slow');#}
-{#            }#}
-{#        });#}
-{#        #}{#-- End Summoned - Accepted --#}
+            {# Accepted true #}
+            if ($(this).val() === 'choice.accepted.none') {
+                $(".control-accepted-null").show('slow');
+            } else if ($(this).val() === 'choice.accepted.nok') {
+                $(".control-accepted-false").show('slow');
+            } else if ($(this).val() === 'choice.accepted.ok') {
+                $(".control-accepted-true").show('slow');
+            }
+        });
+        {#-- End Summoned - Accepted --#}
 
-{#        #}{#--------------------------------------------------------------------#}
-{#        #}{#-- Summoned - stateControl --#}
-{#        #}{#   TODO Reformat this code to avoid using 0,1,2,3,...     #}
-{#        #}{#--------------------------------------------------------------------#}
-{#        $(document).ready(function () {#}
-{#            if ($('input[name*="[summoned]"]:checked').val() === '1') {#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_0").prop("disabled", false);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_1").prop("disabled", true);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_2").prop("disabled", true);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_3").prop("disabled", true);#}
-{#            } else if ($('input[name*="[summoned]"]:checked').val() === '0') {#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_0").prop("disabled", true);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_1").prop("disabled", false);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_2").prop("disabled", false);#}
-{#                $("#lucca_minutebundle_minute_control_stateControl_3").prop("disabled", false);#}
-{#            }#}
-{#        });#}
+        {#--------------------------------------------------------------------#}
+        {#-- Summoned - stateControl --#}
+        {#   TODO Reformat this code to avoid using 0,1,2,3,...     #}
+        {#--------------------------------------------------------------------#}
+        $(document).ready(function () {
+            if ($('input[name*="[summoned]"]:checked').val() === '1') {
+                $("#lucca_minutebundle_minute_control_stateControl_0").prop("disabled", false);
+                $("#lucca_minutebundle_minute_control_stateControl_1").prop("disabled", true);
+                $("#lucca_minutebundle_minute_control_stateControl_2").prop("disabled", true);
+                $("#lucca_minutebundle_minute_control_stateControl_3").prop("disabled", true);
+            } else if ($('input[name*="[summoned]"]:checked').val() === '0') {
+                $("#lucca_minutebundle_minute_control_stateControl_0").prop("disabled", true);
+                $("#lucca_minutebundle_minute_control_stateControl_1").prop("disabled", false);
+                $("#lucca_minutebundle_minute_control_stateControl_2").prop("disabled", false);
+                $("#lucca_minutebundle_minute_control_stateControl_3").prop("disabled", false);
+            }
+        });
 
-{#        $('input[name*="[summoned]"]').on('click', function () {#}
+        $('input[name*="[summoned]"]').on('click', function () {
 
-{#            #}{# Summoned true #}
-{#            if ($(this).val() === '1') {#}
-{#                $('input[id*="control_stateControl_0"]').prop("disabled", false);#}
-{#                $('input[id*="control_stateControl_1"]').prop("disabled", true);#}
-{#                $('input[id*="control_stateControl_2"]').prop("disabled", true);#}
-{#                $('input[id*="control_stateControl_3"]').prop("disabled", true);#}
-{#            } else {#}
-{#                #}{# Summoned false #}
-{#                $('input[id*="control_stateControl_0"]').prop("disabled", true);#}
-{#                $('input[id*="control_stateControl_1"]').prop("disabled", false);#}
-{#                $('input[id*="control_stateControl_2"]').prop("disabled", false);#}
-{#                $('input[id*="control_stateControl_3]').prop("disabled", false);#}
-{#            }#}
-{#        });#}
-{#        #}{#-- End Summoned - stateControl --#}
+            {# Summoned true #}
+            if ($(this).val() === '1') {
+                $('input[id*="control_stateControl_0"]').prop("disabled", false);
+                $('input[id*="control_stateControl_1"]').prop("disabled", true);
+                $('input[id*="control_stateControl_2"]').prop("disabled", true);
+                $('input[id*="control_stateControl_3"]').prop("disabled", true);
+            } else {
+                {# Summoned false #}
+                $('input[id*="control_stateControl_0"]').prop("disabled", true);
+                $('input[id*="control_stateControl_1"]').prop("disabled", false);
+                $('input[id*="control_stateControl_2"]').prop("disabled", false);
+                $('input[id*="control_stateControl_3]').prop("disabled", false);
+            }
+        });
+        {#-- End Summoned - stateControl --#}
 
-{#        #}{#--------------------------------------------------------------------#}
-{#        #}{#-- stateControl - fields control --#}
-{#        #}{#--------------------------------------------------------------------#}
-{#        $(document).ready(function () {#}
-{#            $(".controls").hide('slow');#}
+        {#--------------------------------------------------------------------#}
+        {#-- stateControl - fields control --#}
+        {#--------------------------------------------------------------------#}
+        $(document).ready(function () {
+            $(".controls").hide('slow');
 
-{#            if ($('input[name*="[stateControl]"]:checked').val() === 'choice.state.inside') {#}
-{#                $(".control-inside").show('slow');#}
-{#            }#}
+            if ($('input[name*="[stateControl]"]:checked').val() === 'choice.state.inside') {
+                $(".control-inside").show('slow');
+            }
 
-{#            if ($('input[name*="[stateControl]"]:checked').val() === 'choice.state.neighbour') {#}
-{#                $("#field-humansByControl").show('slow');#}
-{#                $(".label-human").hide('slow');#}
-{#                $(".label-neighbour").show('slow');#}
-{#            }#}
-{#        });#}
+            if ($('input[name*="[stateControl]"]:checked').val() === 'choice.state.neighbour') {
+                $("#field-humansByControl").show('slow');
+                $(".label-human").hide('slow');
+                $(".label-neighbour").show('slow');
+            }
+        });
 
-{#        $('input[name*="[stateControl]"]').click(function () {#}
-{#            $(".controls").hide('slow');#}
+        $('input[name*="[stateControl]"]').click(function () {
+            $(".controls").hide('slow');
 
-{#            if ($(this).val() === 'choice.state.inside')#}
-{#                $(".control-inside").show('slow');#}
+            if ($(this).val() === 'choice.state.inside')
+                $(".control-inside").show('slow');
 
-{#            if ($(this).val() === 'choice.state.neighbour') {#}
-{#                $("#field-humansByControl").show('slow');#}
-{#                $(".label-human").hide('slow');#}
-{#                $(".label-neighbour").show('slow');#}
-{#            }#}
-{#        });#}
-{#        #}{#-- End - stateControl - fields control --#}
+            if ($(this).val() === 'choice.state.neighbour') {
+                $("#field-humansByControl").show('slow');
+                $(".label-human").hide('slow');
+                $(".label-neighbour").show('slow');
+            }
+        });
+        {#-- End - stateControl - fields control --#}
 
-{#        #}{#--------------------------------------------------------------------#}
-{#        #}{#-- sameAgent - Agent --#}
-{#        #}{#--------------------------------------------------------------------#}
-{#        $(document).ready(function () {#}
-{#            {% if control.agent is null or control.agent == minute.agent %}#}
-{#            $("#lucca_minutebundle_updating_control_sameAgent_0").prop("checked", true);#}
-{#            $(".agent-same").show('slow');#}
-{#            $(".agent-new").hide('slow');#}
-{#            {% else %}#}
-{#            $("#lucca_minutebundle_updating_control_sameAgent_1").prop("checked", true);#}
-{#            $(".agent-new").show('slow');#}
-{#            {% endif %}#}
-{#        });#}
+        {#--------------------------------------------------------------------#}
+        {#-- sameAgent - Agent --#}
+        {#--------------------------------------------------------------------#}
+        $(document).ready(function () {
+            {% if control.agent is null or control.agent == minute.agent %}
+            $("#lucca_minutebundle_updating_control_sameAgent_0").prop("checked", true);
+            $(".agent-same").show('slow');
+            $(".agent-new").hide('slow');
+            {% else %}
+            $("#lucca_minutebundle_updating_control_sameAgent_1").prop("checked", true);
+            $(".agent-new").show('slow');
+            {% endif %}
+        });
 
-{#        $('input[name*="[sameAgent]').click(function () {#}
-{#            $(".agent").hide('slow');#}
+        $('input[name*="[sameAgent]').click(function () {
+            $(".agent").hide('slow');
 
-{#            if ($(this).val() === '0') #}{# = no #}
-{#                $(".agent-new").show('slow');#}
-{#            else #}{# = yes #}
-{#                $(".agent-same").show('slow');#}
-{#        });#}
-{#        #}{#-- End - sameAgent - Agent --#}
+            if ($(this).val() === '0') {# = no #}
+                $(".agent-new").show('slow');
+            else {# = yes #}
+                $(".agent-same").show('slow');
+        });
+        {#-- End - sameAgent - Agent --#}
 
-{#        #}{#--------------------------------------------------------------------#}
-{#        #}{#-- Radion buttons for status of human summoned --#}
-{#        #}{#--------------------------------------------------------------------#}
-{#        $(document).ready(function () {#}
-{#            {% if control.humansByControl|length > 0 %}#}
-{#            $('input[id="others"]').prop("checked", true);#}
-{#            $("#field-humansByControl").show('slow');#}
-{#            {% endif %}#}
-{#        });#}
+        {#--------------------------------------------------------------------#}
+        {#-- Radion buttons for status of human summoned --#}
+        {#--------------------------------------------------------------------#}
+        $(document).ready(function () {
+            {% if control.humansByControl|length > 0 %}
+            $('input[id="others"]').prop("checked", true);
+            $("#field-humansByControl").show('slow');
+            {% endif %}
+        });
 
-{#        $('input[name="status"]').click(function () {#}
-{#            if ($(this).val() === 'owner')#}
-{#                $("#field-humansByMinute").toggle('slow');#}
+        $('input[name="status"]').click(function () {
+            if ($(this).val() === 'owner')
+                $("#field-humansByMinute").toggle('slow');
 
-{#            if ($(this).val() === 'others')#}
-{#                $("#field-humansByControl").toggle('slow');#}
-{#        });#}
-{#        #}{#-- End - Radion buttons for status of human summoned --#}
-{#    </script>#}
+            if ($(this).val() === 'others')
+                $("#field-humansByControl").toggle('slow');
+        });
+        {#-- End - Radion buttons for status of human summoned --#}
+    </script>
 
 {% endblock lucca_js %}
