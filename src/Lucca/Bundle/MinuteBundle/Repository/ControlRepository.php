@@ -60,7 +60,7 @@ class ControlRepository extends EntityRepository
         }
 
         $qb->select(array(
-            'partial control.{id, folder, stateControl}',
+            'partial control.{id, stateControl}',
         ));
 
         return $qb->getQuery()->getResult();

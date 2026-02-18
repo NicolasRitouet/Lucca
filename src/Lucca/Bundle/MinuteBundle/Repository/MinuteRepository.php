@@ -138,7 +138,7 @@ class MinuteRepository extends EntityRepository
         }
 
         if ($folders != null && count($folders) > 0) {
-            $qb->andWhere($qb->expr()->in('folder', ':q_folder'))
+            $qb->andWhere($qb->expr()->in('folder.id', ':q_folder'))
                 ->setParameter(':q_folder', $folders);
         }
 
@@ -149,7 +149,7 @@ class MinuteRepository extends EntityRepository
             'partial plot.{id,  parcel, address, isRiskZone, risk}',
             'partial plot_town.{id, name}',
             'partial town.{id, name}',
-            'partial controls.{id, folder, stateControl}',
+            'partial controls.{id, stateControl}',
             'partial folder.{id, dateClosure, nature}',
             'partial natinfs.{id, num, qualification}',
         ));
