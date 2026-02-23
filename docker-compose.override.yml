@@ -21,15 +21,11 @@ services:
         - .env.local
     environment:
       - COMPOSER=composer.json
-    networks:
-      - nw-lan-dev
     user: root
 
   caddy:
     volumes:
       - ./public:/srv/app/public:ro
-    networks:
-      - nw-lan-dev
     ports:
       # HTTP
       -   target: 80
@@ -50,12 +46,4 @@ services:
       -   target: 3306
           published: 33066
           protocol: tcp
-    networks:
-      - nw-lan-dev
   ###< doctrine/doctrine-bundle ###
-
-###< symfony/mailer ###
-
-networks:
-  nw-lan-dev:
-    external: true

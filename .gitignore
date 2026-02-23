@@ -36,3 +36,12 @@ migration_prod
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+###> local storage ###
+/storage/Media/*
+/storage/media/*
+/storage/tmpFiles/*
+!/storage/Media/.gitkeep
+!/storage/media/.gitkeep
+!/storage/tmpFiles/.gitkeep
+###< local storage ###

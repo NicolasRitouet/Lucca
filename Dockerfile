@@ -38,12 +38,15 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql zip intl gd \
     # Clean up
     && apt-get clean -y \
-	apt-get autoclean -y \
-	apt-get autoremove -y
+    && apt-get autoclean -y \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb \
-		-o wkhtmltox_0.12.6.1-3.bookworm_amd64.deb; \
-        dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb;
+RUN ARCH=$(dpkg --print-architecture) && \
+    curl -L https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_${ARCH}.deb \
+        -o wkhtmltox.deb && \
+    dpkg -i wkhtmltox.deb && \
+    rm wkhtmltox.deb
 
 # Workdir after installation
 WORKDIR /srv/app

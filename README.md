@@ -2,70 +2,93 @@
 
 ![Lucca logo](public/assets/logo/lucca-color.png)
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
+Application d'assistance a la cabanisation et autres infractions d'urbanisme.
 
-## Getting Started - Dev
+**Stack** : Symfony 7.4 / PHP 8.4 / MariaDB 11.8 / Caddy 2
 
-1. Run `docker-compose up -d` (the logs will be displayed in the current shell)
-2. Run `docker exec -it lucca_php bash`
-    1. Run `COMPOSER_MEMORY_LIMIT=-1 composer install`
-    3. Run `php bin/console fos:js-routing:dump --format=json --target=assets/routes.json`
-    5. Run `php bin/console asset-map:compile`
-    7. Run `php bin/console lucca:init:media`
-    8. Run `php bin/console lucca:init:department`
-    9. Run `php bin/console doctrine:migrations:migrate`
-3. Create a new user and a new adherent in database
-4. Add lucca.local in your OS host file with 127.0.0.1
-4. Open `https://localhost` or env server name in your favorite web browser
-   and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
+## Demarrage rapide (Docker)
 
-**Enjoy!**
+Prerequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+```bash
+make install
+```
+
+C'est tout. Ajoutez `127.0.0.1 lucca.local` dans votre `/etc/hosts`, puis accedez a **https://lucca.local**.
+
+Credentials : `superadmin` / `superadmin`
+
+> Au premier acces, acceptez le [certificat TLS auto-genere](https://stackoverflow.com/a/15076602/1352334) (cliquez "Avance" puis "Continuer").
+
+## Demarrage rapide (natif, sans Docker)
+
+Prerequis : PHP 8.2+, Composer, MariaDB, [Symfony CLI](https://symfony.com/download), wkhtmltopdf
+
+```bash
+cp .env.local.example .env.local
+# Editez .env.local avec vos parametres de BDD
+
+make install-native
+make native-db-setup
+make serve
+```
+
+L'application est accessible sur **https://127.0.0.1:8000**.
+
+## Commandes disponibles
+
+Lancez `make` ou `make help` pour voir toutes les commandes :
+
+| Commande | Description |
+|---|---|
+| `make install` | Installation complete Docker (build + BDD + fixtures) |
+| `make start` / `make stop` | Demarrer / arreter les containers |
+| `make shell` | Ouvrir un shell dans le container PHP |
+| `make logs` | Voir les logs Docker |
+| `make db-migrate` | Lancer les migrations |
+| `make db-fixtures` | Charger les fixtures |
+| `make db-init` | Reset complet de la BDD (avec confirmation) |
+| `make tests` | Lancer tous les tests |
+| `make test-bundle BUNDLE=UserBundle` | Tester un bundle specifique |
+| `make cc` | Vider le cache Symfony |
+| `make assets` | Recompiler les assets |
 
 ## Migrations
-- To create a new migration with your database change, run `php bin/console doctrine:migrations:diff`
-- To apply the migration, run `php bin/console doctrine:migrations:migrate`
-- To revert the migration, run `php bin/console doctrine:migrations:migrate prev`
-- To see the status of your migrations, run `php bin/console doctrine:migrations:status`
-- To see the list of migrations, run `php bin/console doctrine:migrations:list`
 
-## Unit test
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src`
+```bash
+make db-migrate                                      # Appliquer les migrations
+make shell                                           # Puis dans le container :
+php bin/console doctrine:migrations:diff             # Creer une migration
+php bin/console doctrine:migrations:migrate prev     # Revenir en arriere
+php bin/console doctrine:migrations:status           # Voir le statut
+```
 
-OR 
+## Tests
 
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/AdherentBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/ChecklistBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/ContentBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/CoreBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/DecisionBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/DepartmentBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/FolderBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/LogBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/MediaBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/MinuteBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/ModelBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/ParameterBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/SecurityBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/SettingBundle`
-- To run unit test use `php -d memory_limit=-1 bin/phpunit src/Lucca/Bundle/UserBundle`
+```bash
+make tests                           # Tous les tests
+make test-bundle BUNDLE=UserBundle   # Un bundle specifique
+```
 
-## Docs
+## Commandes Lucca
 
-1. [Initialization project](docs/initialization_lucca.md)
-2. [Container network](docs/docker_network_developper.md)
-3. [Email configuration](docs/email.md)
-4. [Deploy container](docs/production_deploy.md)
-5. [Environment vars](docs/env_vars.md)
+| Commande | Description |
+|---|---|
+| `lucca:init:setting` | Initialiser les parametres |
+| `lucca:init:media` | Initialiser le bundle media |
+| `lucca:init:department` | Initialiser un departement demo |
+| `lucca:user:change-password` | Changer le mot de passe d'un utilisateur |
+| `lucca:security:unban` | Debannir une adresse IP |
 
-**Lucca command :**
+## Documentation
 
-Change a user password :
-`lucca:user:change-password`
-
-Unban specific ip address :
-`lucca:security:unban`
+- [Variables d'environnement](docs/env_vars.md)
+- [Configuration email](docs/email.md)
+- [Deploiement production](docs/production_deploy.md)
+- [Initialisation des bundles](docs/initialization_lucca.md)
+- [Reseau Docker multi-projets](docs/docker_network_developper.md)
 
 ## Credits
 
-Created by [Numeric Wave](https://numeric-wave.eu).
+Cree par [Numeric Wave](https://numeric-wave.eu).
+Licence AGPL-3.0-or-later.

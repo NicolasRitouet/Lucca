@@ -15,9 +15,10 @@ services:
     working_dir: /srv/app
     volumes:
       - .:/srv/app
-      - ../lucca-v2.doc:/srv/docs
+      - ./storage:/srv/docs
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: mariadb:${MYSQL_VERSION}-noble-rc
@@ -29,6 +30,12 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql:rw
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   caddy:
     container_name: caddy_lucca
