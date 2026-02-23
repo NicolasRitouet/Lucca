@@ -59,7 +59,7 @@
                     <a href="{{ path('lucca_content_dashboard', {'dep_code': department.code}) }}" class="text-decoration-none">
                         <div class="card card-custom shadow-sm">
                             <div class="card-image-container">
-                                <img src="{{ asset('setting.general.logo.name'|setting(department.code)) }}"
+                                <img src="{{ asset('setting.general.logo.name'|setting(department.code)|default('assets/logo/lucca-logo-texte-transparent.png')) }}"
                                      alt="{{ 'setting.general.ddtName.name'| setting(department.code) }}"
                                      class="img-fluid">
                             </div>

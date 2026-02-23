@@ -34,7 +34,7 @@ class GroupFixtures extends Fixture
             $newGroup = new Group();
             $newGroup->setName($group['name']);
             $newGroup->setDisplayed($group['displayed']);
-            $newGroup->setRoles([$group['role']]);
+            $newGroup->setRoles($group['role']);
 
             $manager->persist($newGroup);
         }
